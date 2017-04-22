@@ -101,14 +101,16 @@ module.exports = function(grunt) {
 
             grunt.log.error('An error occured: ' + errorObject.message);
 
-            errorObject.errors.forEach(function(e) {
-                if (e.code === 'already_exists') {
-                    grunt.log.error('A release with this ' + e.field + ' already exists. I aborted.');
-                } else {
-                    grunt.log.error(e);
-                }
-            });
-
+            if(errorObject.errors && errorObject.errors.length > 0){
+              errorObject.errors.forEach(function(e) {
+                  if (e.code === 'already_exists') {
+                      grunt.log.error('A release with this ' + e.field + ' already exists. I aborted.');
+                  } else {
+                      grunt.log.error(e);
+                  }
+              });
+            }
+            
             done(false);
         });
     });
